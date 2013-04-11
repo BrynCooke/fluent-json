@@ -10,7 +10,7 @@ JsonObject jsonObject =
 		.add("prop2", 2)
 		.addNull("prop3")
 		.add("prop4", (String)null)
-		.addObject("5rop5")
+		.addObject("prop5")
 			.add("np1", 4)
 			.end()
 		.addArray("prop6")
