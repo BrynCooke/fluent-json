@@ -3,6 +3,7 @@ fluent-json
 
 A fluent builder for Google Gson
 
+```java
 JsonObject jsonObject = 
 	JsonBuilderFactory.buildObject()
 		.add("Prop1", "1")
@@ -18,7 +19,7 @@ JsonObject jsonObject =
 			.add("AE1")
 		.end()
 	.getJson();
-
+```
 
 Copyright 2013 Bryn Cooke
  
