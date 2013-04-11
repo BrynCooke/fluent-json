@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.jglue.jsonfluent;
+package org.jglue.fluentjson;
 
 import java.io.IOException;
 import java.io.StringWriter;
@@ -21,6 +21,10 @@ import java.text.ParseException;
 import java.util.Arrays;
 import java.util.List;
 
+import org.jglue.fluentjson.AbstractMapper;
+import org.jglue.fluentjson.JsonBuilder;
+import org.jglue.fluentjson.JsonBuilderFactory;
+import org.jglue.fluentjson.JsonObjectBuilder;
 import org.junit.Assert;
 import org.junit.Test;
 
