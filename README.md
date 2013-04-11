@@ -15,7 +15,7 @@ JsonObject jsonObject =
 			.end()
 		.addArray("Foo")
 			.addObject()
-			.end()
+				.end()
 			.add("AE1")
 		.end()
 	.getJson();
