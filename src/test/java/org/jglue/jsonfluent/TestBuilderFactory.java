@@ -30,9 +30,8 @@ public class TestBuilderFactory {
 	@Test
 	public void testBuildObject() throws IOException, ParseException {
 
-		JsonBuilderFactory s = new JsonBuilderFactory();
 
-		JsonObject jsonObject = s.buildObject()
+		JsonObject jsonObject = JsonBuilderFactory.buildObject()
 					.add("Prop1", "1")
 					.add("Prop2", 2)
 					.addNull("Prop3")
@@ -54,9 +53,8 @@ public class TestBuilderFactory {
 	@Test
 	public void testBuildArray() throws IOException, ParseException {
 
-		JsonBuilderFactory s = new JsonBuilderFactory();
 
-		JsonArray jsonObject = s.buildArray()
+		JsonArray jsonObject = JsonBuilderFactory.buildArray()
 					.add("1")
 					.add(2)
 					.addNull()

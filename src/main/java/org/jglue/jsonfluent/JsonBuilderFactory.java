@@ -38,7 +38,7 @@ public class JsonBuilderFactory {
 	/**
 	 * @return Start building a new json object.
 	 */
-	public JsonObjectBuilder<?, JsonObject> buildObject() {
+	public static JsonObjectBuilder<?, JsonObject> buildObject() {
 		JsonObject o = new JsonObject();
 		return new Impl(o, o);
 	}
@@ -46,12 +46,12 @@ public class JsonBuilderFactory {
 	/**
 	 * @return Start building new json array.
 	 */
-	public JsonArrayBuilder<?, JsonArray> buildArray() {
+	public static JsonArrayBuilder<?, JsonArray> buildArray() {
 		JsonArray o = new JsonArray();
 		return new Impl(o, o);
 	}
 
-	public class Impl<P, R> implements JsonObjectBuilder<P, R>,
+	public static class Impl<P, R> implements JsonObjectBuilder<P, R>,
 			JsonArrayBuilder<P, R> {
 
 		private JsonElement context;
