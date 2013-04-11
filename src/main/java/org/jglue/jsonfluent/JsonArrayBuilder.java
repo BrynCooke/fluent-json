@@ -108,7 +108,7 @@ public interface JsonArrayBuilder<P, R> extends JsonBuilder {
 	 * @param builders the builders to get the elements from.
 	 * @return the current builder.
 	 */
-	public <T> JsonArrayBuilder<P, R> add(Iterable<T> objects, Transform<T> transform);
+	public <T> JsonArrayBuilder<P, R> add(Iterable<T> objects, Mapper<T> transform);
 
 	/**
 	 * Add a single element.
@@ -116,7 +116,7 @@ public interface JsonArrayBuilder<P, R> extends JsonBuilder {
 	 * @param object the object to add.
 	 * @return the current builder.
 	 */
-	public <T> JsonArrayBuilder<P, R> add(T object, Transform<T> transform);
+	public <T> JsonArrayBuilder<P, R> add(T object, Mapper<T> transform);
 
 	
 	/**

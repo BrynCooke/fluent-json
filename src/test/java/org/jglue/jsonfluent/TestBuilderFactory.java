@@ -65,10 +65,10 @@ public class TestBuilderFactory {
 		A a = new A();
 
 		JsonObject jsonObject = JsonBuilderFactory.buildObject()
-				.add("value", a, new AbstractTransform<A>() {
+				.add("value", a, new AbstractMapper<A>() {
 
 					@Override
-					public JsonBuilder transform(A t) {
+					public JsonBuilder map(A t) {
 						return buildObject().add("b", t.b)
 								.add("c", t.c);
 					}
@@ -83,10 +83,10 @@ public class TestBuilderFactory {
 		List<A> aList = Arrays.asList(new A[]{new A(), new A()});
 
 		JsonObject jsonObject = JsonBuilderFactory.buildObject()
-				.add("value", aList, new AbstractTransform<A>() {
+				.add("value", aList, new AbstractMapper<A>() {
 
 					@Override
-					public JsonBuilder transform(A t) {
+					public JsonBuilder map(A t) {
 						return buildObject().add("b", t.b)
 								.add("c", t.c);
 					}
@@ -100,10 +100,10 @@ public class TestBuilderFactory {
 	public void testTransformationArray() throws IOException, ParseException {
 		List<A> aList = Arrays.asList(new A[]{new A(), new A()});
 
-		JsonArray jsonArray = JsonBuilderFactory.buildArray(aList, new AbstractTransform<A>() {
+		JsonArray jsonArray = JsonBuilderFactory.buildArray(aList, new AbstractMapper<A>() {
 
 					@Override
-					public JsonBuilder transform(A t) {
+					public JsonBuilder map(A t) {
 						return buildObject().add("b", t.b)
 								.add("c", t.c);
 					}

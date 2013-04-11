@@ -15,13 +15,12 @@
  */
 package org.jglue.jsonfluent;
 
-public interface Transform<T> {
+/**
+ * Convenience transformer that provides access to static methods 
+ * @author Bryn Cooke
+ *
+ * @param <T> The type to transform
+ */
+public abstract class AbstractMapper<T> extends JsonBuilderFactory implements Mapper<T> {
 
-	/**
-	 * Transform the object in to a builder.
-	 * @param o the object to transform
-	 * @return The builder.
-	 */
-	public JsonBuilder transform(T o);
-	
 }
