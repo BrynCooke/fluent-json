@@ -191,7 +191,6 @@ public class JsonBuilderFactory {
 		@Override
 		public void write(Writer out) throws IOException {
 			JsonWriter jsonWriter = new JsonWriter(out);
-			jsonWriter.setLenient(true);
 			Streams.write(root, jsonWriter);
 		}
 
@@ -256,6 +255,11 @@ public class JsonBuilderFactory {
 			JsonObject obj = ((JsonObject) context);
 			obj.add(key, JsonNull.INSTANCE);
 			return this;
+		}
+
+		@Override
+		public void write(JsonWriter out) throws IOException {
+			Streams.write(root, out);
 		}
 
 	}

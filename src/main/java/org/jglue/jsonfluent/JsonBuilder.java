@@ -18,6 +18,8 @@ package org.jglue.jsonfluent;
 import java.io.IOException;
 import java.io.Writer;
 
+import com.google.gson.stream.JsonWriter;
+
 /**
  * Base type for fluent builders.
  * @author Bryn Cooke
@@ -26,11 +28,18 @@ import java.io.Writer;
 public interface JsonBuilder {
     
 	/**
-     * Write the JSON to a writer. Not that order of elements is not guaranteed.
+     * Write the JSON to a writer.
      * @param out The outout writer.
      * @throws IOException
      */
     public void write(Writer out) throws IOException;
+    
+	/**
+     * Write the JSON to a writer.
+     * @param out The outout writer.
+     * @throws IOException
+     */
+    public void write(JsonWriter out) throws IOException;
     
     /**
      * @return The serialized JSON as a string.
