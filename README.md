@@ -3,6 +3,8 @@ fluent-json
 
 A fluent builder for Google Gson
 
+See website for more details http://jglue.org/fluent-json/
+
 ```java
 JsonObject jsonObject = 
 	JsonBuilderFactory.buildObject()
