@@ -6,21 +6,35 @@ A fluent builder for Google Gson
 ```java
 JsonObject jsonObject = 
 	JsonBuilderFactory.buildObject()
-		.add("Prop1", "1")
-		.add("Prop2", 2)
-		.addNull("Prop3")
-		.add("Prop4", (String)null)
-		.addObject("Prop5")
-			.add("NP1", 4)
+		.add("prop1", "1")
+		.add("prop2", 2)
+		.addNull("prop3")
+		.add("prop4", (String)null)
+		.addObject("5rop5")
+			.add("np1", 4)
 			.end()
-		.addArray("Foo")
+		.addArray("prop6")
 			.addObject()
 				.end()
-			.add("AE1")
+			.add("ae1")
 		.end()
 	.getJson();
 ```
-
+```js
+{
+	prop1: "1",
+	prop2: 2,
+	prop3: null,
+	prop4: null,
+	prop5: {
+			np1: 4
+		},
+	prop6: [
+			{},
+			"ae1"
+		]
+}
+```
 Copyright 2013 Bryn Cooke
  
 Licensed under the Apache License, Version 2.0 (the "License");
