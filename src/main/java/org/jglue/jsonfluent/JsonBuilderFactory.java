@@ -17,13 +17,15 @@ package org.jglue.jsonfluent;
 
 import java.io.IOException;
 import java.io.Writer;
+import java.util.Map;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonNull;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonPrimitive;
-import com.google.gson.internal.Streams;
+import com.google.gson.TypeAdapter;
+import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
 
 /**
@@ -41,8 +43,6 @@ public class JsonBuilderFactory {
 		JsonObject o = new JsonObject();
 		return new Impl(o, o);
 	}
-	
-
 
 	/**
 	 * @return Start building new json array.
@@ -99,24 +99,27 @@ public class JsonBuilderFactory {
 		}
 
 		@Override
-		public JsonArrayBuilder add(Iterable<JsonBuilder> builders) {
-			JsonArray array = (JsonArray) context;
-			for (JsonBuilder builder : builders) {
-				Impl i = ((Impl) builder);
-				array.add(i.context);
-
-			}
+		public JsonArrayBuilder add(Iterable<? extends JsonBuilder> builders) {
+			JsonArrayBuilder<?, JsonArray> array = createArray(builders);
+			add(array);
 			return this;
 		}
 
-		@Override
-		public JsonObjectBuilder add(String key, Iterable<JsonBuilder> builders) {
-			JsonArrayBuilder<?, JsonArray> array = JsonBuilderFactory.buildArray();
+		private JsonArrayBuilder<?, JsonArray> createArray(
+				Iterable<? extends JsonBuilder> builders) {
+			JsonArrayBuilder<?, JsonArray> array = JsonBuilderFactory
+					.buildArray();
 			for (JsonBuilder b : builders) {
 				array.add(b);
 			}
+			return array;
+		}
+
+		@Override
+		public JsonObjectBuilder add(String key, Iterable<? extends JsonBuilder> builders) {
+			JsonArrayBuilder<?, JsonArray> array = createArray(builders);
 			add(key, array);
-			
+
 			return this;
 		}
 
@@ -206,7 +209,7 @@ public class JsonBuilderFactory {
 		@Override
 		public void write(Writer out) throws IOException {
 			JsonWriter jsonWriter = new JsonWriter(out);
-			Streams.write(root, jsonWriter);
+			write(jsonWriter);
 		}
 
 		@Override
@@ -274,18 +277,26 @@ public class JsonBuilderFactory {
 
 		@Override
 		public void write(JsonWriter out) throws IOException {
-			Streams.write(root, out);
+			write(out, root);
 		}
 
 		@Override
 		public <T> JsonObjectBuilder<P, R> add(String key, Iterable<T> objects,
 				Mapper<T> transform) {
-			JsonArrayBuilder<?, JsonArray> array = JsonBuilderFactory.buildArray();
+			JsonArrayBuilder<?, JsonArray> array = createArray(objects,
+					transform);
+			add(key, array);
+			return this;
+		}
+
+		private <T> JsonArrayBuilder<?, JsonArray> createArray(
+				Iterable<T> objects, Mapper<T> transform) {
+			JsonArrayBuilder<?, JsonArray> array = JsonBuilderFactory
+					.buildArray();
 			for (T o : objects) {
 				array.add(transform.map(o));
 			}
-			add(key, array);
-			return this;
+			return array;
 		}
 
 		@Override
@@ -298,10 +309,8 @@ public class JsonBuilderFactory {
 		@Override
 		public <T> JsonArrayBuilder<P, R> add(Iterable<T> objects,
 				Mapper<T> transform) {
-			JsonArrayBuilder<?, JsonArray> array = JsonBuilderFactory.buildArray();
-			for (T o : objects) {
-				array.add(transform.map(o));
-			}
+			JsonArrayBuilder<?, JsonArray> array = createArray(objects,
+					transform);
 			add(array);
 			return this;
 		}
@@ -312,6 +321,44 @@ public class JsonBuilderFactory {
 			return this;
 		}
 
+		/**
+		 * Serialization code copied from GSON
+		 */
+		private void write(JsonWriter out, JsonElement value)
+				throws IOException {
+			if (value == null || value.isJsonNull()) {
+				out.nullValue();
+			} else if (value.isJsonPrimitive()) {
+				JsonPrimitive primitive = value.getAsJsonPrimitive();
+				if (primitive.isNumber()) {
+					out.value(primitive.getAsNumber());
+				} else if (primitive.isBoolean()) {
+					out.value(primitive.getAsBoolean());
+				} else {
+					out.value(primitive.getAsString());
+				}
+
+			} else if (value.isJsonArray()) {
+				out.beginArray();
+				for (JsonElement e : value.getAsJsonArray()) {
+					write(out, e);
+				}
+				out.endArray();
+
+			} else if (value.isJsonObject()) {
+				out.beginObject();
+				for (Map.Entry<String, JsonElement> e : value.getAsJsonObject()
+						.entrySet()) {
+					out.name(e.getKey());
+					write(out, e.getValue());
+				}
+				out.endObject();
+
+			} else {
+				throw new IllegalArgumentException("Couldn't write "
+						+ value.getClass());
+			}
+		}
 	}
 
 }

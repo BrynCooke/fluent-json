@@ -91,7 +91,7 @@ public interface JsonArrayBuilder<P, R> extends JsonBuilder {
 	 * @param builders the builders to get the elements from.
 	 * @return the current builder.
 	 */
-	public JsonArrayBuilder<P, R> add(Iterable<JsonBuilder> builders);
+	public JsonArrayBuilder<P, R> add(Iterable<? extends JsonBuilder> builders);
 
 	/**
 	 * Add a single element.

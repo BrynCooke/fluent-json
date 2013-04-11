@@ -53,7 +53,7 @@ public interface JsonObjectBuilder<P, R> extends JsonBuilder {
      * @param builders The builders for the elements.
      * @return The current builder.
      */
-    public JsonObjectBuilder<P, R> add(String key, Iterable<JsonBuilder> builders);
+    public JsonObjectBuilder<P, R> add(String key, Iterable<? extends JsonBuilder> builders);
     
 
     /**
