@@ -16,7 +16,6 @@
 package org.jglue.jsonfluent;
 
 import java.io.IOException;
-import java.io.StringWriter;
 import java.io.Writer;
 
 import com.google.gson.JsonArray;

@@ -15,7 +15,6 @@
  */
 package org.jglue.jsonfluent;
 
-import javax.lang.model.type.NullType;
 
 
 /**

@@ -3,6 +3,22 @@ fluent-json
 
 A fluent builder for Google Gson
 
+JsonObject jsonObject = 
+	JsonBuilderFactory.buildObject()
+		.add("Prop1", "1")
+		.add("Prop2", 2)
+		.addNull("Prop3")
+		.add("Prop4", (String)null)
+		.addObject("Prop5")
+			.add("NP1", 4)
+			.end()
+		.addArray("Foo")
+			.addObject()
+			.end()
+			.add("AE1")
+		.end()
+	.getJson();
+
 
 Copyright 2013 Bryn Cooke
  
