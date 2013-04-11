@@ -129,8 +129,8 @@
 		</profile>
 	</profiles>
 	<scm>
-		<connection>scm:git:ssh://git@github.com:BrynCooke/fluent-json.git</connection>
-		<developerConnection>scm:git:ssh://git@github.com:BrynCooke/fluent-json.git</developerConnection>
+		<connection>scm:git:ssh://git@github.com/BrynCooke/fluent-json.git</connection>
+		<developerConnection>scm:git:ssh://git@github.com/BrynCooke/fluent-json.git</developerConnection>
 		<url>https://github.com/BrynCooke/fluent-json</url>
 	</scm>
 </project>
