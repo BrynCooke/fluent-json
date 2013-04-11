@@ -55,6 +55,16 @@ public interface JsonObjectBuilder<P, R> extends JsonBuilder {
      */
     public JsonObjectBuilder<P, R> add(String key, Iterable<JsonBuilder> builders);
     
+
+    /**
+     * Add an array of elements assigned to a key.
+     * 
+     * @param key The key for the new element.
+     * @param objects The objects to add.
+     * @return The current builder.
+     */
+    public <T> JsonObjectBuilder<P, R> add(String key, Iterable<T> objects, Transform<T> transform);
+    
     
 
     /**
@@ -65,6 +75,15 @@ public interface JsonObjectBuilder<P, R> extends JsonBuilder {
      * @return The current builder.
      */
     public JsonObjectBuilder<P, R> add(String key, JsonBuilder builder);
+    
+    /**
+     * Add a single element assigned to a key.
+     * 
+     * @param key The key for the new element.
+     * @param object The object to add.
+     * @return The current builder.
+     */
+    public <T> JsonObjectBuilder<P, R> add(String key, T object, Transform<T> transform);
 
     /**
      * Add a simple property

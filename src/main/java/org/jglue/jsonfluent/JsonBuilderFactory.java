@@ -41,6 +41,8 @@ public class JsonBuilderFactory {
 		JsonObject o = new JsonObject();
 		return new Impl(o, o);
 	}
+	
+
 
 	/**
 	 * @return Start building new json array.
@@ -48,6 +50,19 @@ public class JsonBuilderFactory {
 	public static JsonArrayBuilder<?, JsonArray> buildArray() {
 		JsonArray o = new JsonArray();
 		return new Impl(o, o);
+	}
+
+	/**
+	 * @return Start building new json array.
+	 */
+	public static <T> JsonArrayBuilder<?, JsonArray> buildArray(
+			Iterable<T> objects, Transform<T> transform) {
+		JsonArray a = new JsonArray();
+		Impl impl = new Impl(a, a);
+		for (T o : objects) {
+			impl.add(transform.transform(o));
+		}
+		return impl;
 	}
 
 	public static class Impl<P, R> implements JsonObjectBuilder<P, R>,
@@ -84,7 +99,7 @@ public class JsonBuilderFactory {
 		}
 
 		@Override
-		public JsonArrayBuilder add(Iterable<? extends JsonBuilder> builders) {
+		public JsonArrayBuilder add(Iterable<JsonBuilder> builders) {
 			JsonArray array = (JsonArray) context;
 			for (JsonBuilder builder : builders) {
 				Impl i = ((Impl) builder);
@@ -96,12 +111,12 @@ public class JsonBuilderFactory {
 
 		@Override
 		public JsonObjectBuilder add(String key, Iterable<JsonBuilder> builders) {
-			JsonObject obj = (JsonObject) context;
-			for (JsonBuilder builder : builders) {
-				Impl i = ((Impl) builder);
-				obj.add(key, i.context);
-
+			JsonArrayBuilder<?, JsonArray> array = JsonBuilderFactory.buildArray();
+			for (JsonBuilder b : builders) {
+				array.add(b);
 			}
+			add(key, array);
+			
 			return this;
 		}
 
@@ -260,6 +275,41 @@ public class JsonBuilderFactory {
 		@Override
 		public void write(JsonWriter out) throws IOException {
 			Streams.write(root, out);
+		}
+
+		@Override
+		public <T> JsonObjectBuilder<P, R> add(String key, Iterable<T> objects,
+				Transform<T> transform) {
+			JsonArrayBuilder<?, JsonArray> array = JsonBuilderFactory.buildArray();
+			for (T o : objects) {
+				array.add(transform.transform(o));
+			}
+			add(key, array);
+			return this;
+		}
+
+		@Override
+		public <T> JsonObjectBuilder<P, R> add(String key, T object,
+				Transform<T> transform) {
+			add(key, transform.transform(object));
+			return this;
+		}
+
+		@Override
+		public <T> JsonArrayBuilder<P, R> add(Iterable<T> objects,
+				Transform<T> transform) {
+			JsonArrayBuilder<?, JsonArray> array = JsonBuilderFactory.buildArray();
+			for (T o : objects) {
+				array.add(transform.transform(o));
+			}
+			add(array);
+			return this;
+		}
+
+		@Override
+		public <T> JsonArrayBuilder<P, R> add(T object, Transform<T> transform) {
+			add(transform.transform(object));
+			return this;
 		}
 
 	}
