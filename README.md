@@ -1,7 +1,7 @@
 fluent-json
 ===========
 
-A java fluent builder for Google Gson
+A fluent builder for Google Gson
 
 
 Copyright 2013 Bryn Cooke
