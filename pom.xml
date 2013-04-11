@@ -11,7 +11,7 @@
 	</parent>
 	<name>Fluent-JSON</name>
 	<url>http://jglue.org/fluent-json</url>
-	<description>JUnit runner for testing CDI based projects.</description>
+	<description>A fluent builder for Google Gson objects</description>
 	<developers>
 		<developer>
 			<name>Bryn Cooke</name>
