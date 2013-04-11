@@ -5,6 +5,14 @@ A fluent builder for Google Gson
 
 See website for more details http://jglue.org/fluent-json/
 
+```xml
+<dependency>
+  <groupId>org.jglue.fluent-json</groupId>
+  <artifactId>fluent-json</artifactId>
+  <version>1.0.0</version>
+</dependency>
+```
+
 ```java
 JsonObject jsonObject = 
 	JsonBuilderFactory.buildObject()
