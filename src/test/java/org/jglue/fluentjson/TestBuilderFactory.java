@@ -203,4 +203,32 @@ public class TestBuilderFactory {
 				.parse("{\"val\":[{\"b\":\"hello\",\"c\":\"world\"}, {\"b\":\"hello\",\"c\":\"world\"}]}");
 		Assert.assertEquals(test, jsonArray);
 	}
+	
+	@Test
+	public void testAddAllJsonBuildersOnArray() throws IOException, ParseException {
+		List<? extends JsonBuilder> aList = Arrays.asList(JsonBuilderFactory.buildObject().add("b", "hello").add("c", "world"), JsonBuilderFactory.buildObject().add("b", "hello").add("c", "world"));
+
+		JsonArray jsonArray = JsonBuilderFactory.buildArray().addAll(aList).getJson();
+		JsonElement test = new JsonParser()
+				.parse("[{\"b\":\"hello\",\"c\":\"world\"}, {\"b\":\"hello\",\"c\":\"world\"}]");
+		Assert.assertEquals(test, jsonArray);
+	}
+	
+	@Test
+	public void testTransformationArrayAddAll() throws IOException,
+			ParseException {
+		List<A> aList = Arrays.asList(new A[] { new A(), new A() });
+
+		JsonArray jsonArray = JsonBuilderFactory.buildArray()
+				.addAll(aList, new AbstractMapper<A>() {
+
+					@Override
+					public JsonBuilder map(A t) {
+						return buildObject().add("b", t.b).add("c", t.c);
+					}
+				}).getJson();
+		JsonElement test = new JsonParser()
+				.parse("[{\"b\":\"hello\",\"c\":\"world\"}, {\"b\":\"hello\",\"c\":\"world\"}]");
+		Assert.assertEquals(test, jsonArray);
+	}
 }

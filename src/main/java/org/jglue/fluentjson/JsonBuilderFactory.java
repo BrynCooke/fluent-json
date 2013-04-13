@@ -359,6 +359,24 @@ public class JsonBuilderFactory {
 						+ value.getClass());
 			}
 		}
+
+		@Override
+		public JsonArrayBuilder<P, R> addAll(
+				Iterable<? extends JsonBuilder> builders) {
+			for (JsonBuilder o : builders) {
+				add(o);
+			}
+			return this;
+		}
+
+		@Override
+		public <T> JsonArrayBuilder<P, R> addAll(Iterable<T> objects,
+				Mapper<T> transform) {
+			for (T o : objects) {
+				add(transform.map(o));
+			}
+			return this;
+		}
 	}
 
 }
