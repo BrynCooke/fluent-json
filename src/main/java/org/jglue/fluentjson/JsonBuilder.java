@@ -29,15 +29,15 @@ public interface JsonBuilder {
     
 	/**
      * Write the JSON to a writer.
-     * @param out The outout writer.
-     * @throws IOException
+     * @param out The output writer.
+     * @throws IOException if there was a problem
      */
     public void write(Writer out) throws IOException;
     
 	/**
      * Write the JSON to a writer.
-     * @param out The outout writer.
-     * @throws IOException
+     * @param out The output writer.
+     * @throws IOException if there was a problem
      */
     public void write(JsonWriter out) throws IOException;
     

@@ -80,10 +80,11 @@ public interface JsonObjectBuilder<P, R> extends JsonBuilder {
      * Add a single element assigned to a key.
      * 
      * @param key The key for the new element.
-     * @param object The object to add.
+     * @param objects The objects to add.
+     * @param <T> The objects type.
      * @return The current builder.
      */
-    public <T> JsonObjectBuilder<P, R> add(String key, Mapper<T> transform, T... object);
+    public <T> JsonObjectBuilder<P, R> add(String key, Mapper<T> transform, T... objects);
 
     /**
      * Add a simple property

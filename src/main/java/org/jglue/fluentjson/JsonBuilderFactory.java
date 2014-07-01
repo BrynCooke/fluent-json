@@ -55,8 +55,7 @@ public class JsonBuilderFactory {
 	/**
 	 * @return Start building new json array.
 	 */
-	public static <T> JsonArrayBuilder<?, JsonArray> buildArray(Mapper<T> transform,
-			Iterable<T> objects) {
+	public static <T> JsonArrayBuilder<?, JsonArray> buildArray(Mapper<T> transform, Iterable<T> objects) {
 		JsonArray a = new JsonArray();
 		Impl impl = new Impl(a, a);
 		for (T o : objects) {
@@ -65,8 +64,7 @@ public class JsonBuilderFactory {
 		return impl;
 	}
 
-	public static class Impl<P, R> implements JsonObjectBuilder<P, R>,
-			JsonArrayBuilder<P, R> {
+	public static class Impl<P, R> implements JsonObjectBuilder<P, R>, JsonArrayBuilder<P, R> {
 
 		private JsonElement context;
 		private JsonElement root;
@@ -105,10 +103,8 @@ public class JsonBuilderFactory {
 			return this;
 		}
 
-		private JsonArrayBuilder<?, JsonArray> createArray(
-				Iterable<? extends JsonBuilder> builders) {
-			JsonArrayBuilder<?, JsonArray> array = JsonBuilderFactory
-					.buildArray();
+		private JsonArrayBuilder<?, JsonArray> createArray(Iterable<? extends JsonBuilder> builders) {
+			JsonArrayBuilder<?, JsonArray> array = JsonBuilderFactory.buildArray();
 			for (JsonBuilder b : builders) {
 				array.add(b);
 			}
@@ -116,8 +112,7 @@ public class JsonBuilderFactory {
 		}
 
 		@Override
-		public JsonObjectBuilder add(String key,
-				Iterable<? extends JsonBuilder> builders) {
+		public JsonObjectBuilder add(String key, Iterable<? extends JsonBuilder> builders) {
 			JsonArrayBuilder<?, JsonArray> array = createArray(builders);
 			add(key, array);
 
@@ -282,18 +277,14 @@ public class JsonBuilderFactory {
 		}
 
 		@Override
-		public <T> JsonObjectBuilder<P, R> add(String key, Mapper<T> transform,
-				Iterable<T> objects) {
-			JsonArrayBuilder<?, JsonArray> array = createArray(objects,
-					transform);
+		public <T> JsonObjectBuilder<P, R> add(String key, Mapper<T> transform, Iterable<T> objects) {
+			JsonArrayBuilder<?, JsonArray> array = createArray(objects, transform);
 			add(key, array);
 			return this;
 		}
 
-		private <T> JsonArrayBuilder<?, JsonArray> createArray(
-				Iterable<T> objects, Mapper<T> transform) {
-			JsonArrayBuilder<?, JsonArray> array = JsonBuilderFactory
-					.buildArray();
+		private <T> JsonArrayBuilder<?, JsonArray> createArray(Iterable<T> objects, Mapper<T> transform) {
+			JsonArrayBuilder<?, JsonArray> array = JsonBuilderFactory.buildArray();
 			for (T o : objects) {
 				array.add(transform.map(o));
 			}
@@ -301,8 +292,7 @@ public class JsonBuilderFactory {
 		}
 
 		@Override
-		public <T> JsonObjectBuilder<P, R> add(String key, Mapper<T> transform,
-				T... objects) {
+		public <T> JsonObjectBuilder<P, R> add(String key, Mapper<T> transform, T... objects) {
 			for (T object : objects) {
 				add(key, transform.map(object));
 			}
@@ -310,25 +300,24 @@ public class JsonBuilderFactory {
 		}
 
 		@Override
-		public <T> JsonArrayBuilder<P, R> add(Iterable<T> objects,
-				Mapper<T> transform) {
-			JsonArrayBuilder<?, JsonArray> array = createArray(objects,
-					transform);
+		public <T> JsonArrayBuilder<P, R> add(Mapper<T> transform, Iterable<T> objects) {
+			JsonArrayBuilder<?, JsonArray> array = createArray(objects, transform);
 			add(array);
 			return this;
 		}
 
 		@Override
-		public <T> JsonArrayBuilder<P, R> add(T object, Mapper<T> transform) {
-			add(transform.map(object));
+		public <T> JsonArrayBuilder<P, R> add(Mapper<T> transform, T... objects) {
+			for (T object : objects) {
+				add(transform.map(object));
+			}
 			return this;
 		}
 
 		/**
 		 * Serialization code copied from GSON
 		 */
-		private void write(JsonWriter out, JsonElement value)
-				throws IOException {
+		private void write(JsonWriter out, JsonElement value) throws IOException {
 			if (value == null || value.isJsonNull()) {
 				out.nullValue();
 			} else if (value.isJsonPrimitive()) {
@@ -350,22 +339,19 @@ public class JsonBuilderFactory {
 
 			} else if (value.isJsonObject()) {
 				out.beginObject();
-				for (Map.Entry<String, JsonElement> e : value.getAsJsonObject()
-						.entrySet()) {
+				for (Map.Entry<String, JsonElement> e : value.getAsJsonObject().entrySet()) {
 					out.name(e.getKey());
 					write(out, e.getValue());
 				}
 				out.endObject();
 
 			} else {
-				throw new IllegalArgumentException("Couldn't write "
-						+ value.getClass());
+				throw new IllegalArgumentException("Couldn't write " + value.getClass());
 			}
 		}
 
 		@Override
-		public JsonArrayBuilder<P, R> addAll(
-				Iterable<? extends JsonBuilder> builders) {
+		public JsonArrayBuilder<P, R> addAll(Iterable<? extends JsonBuilder> builders) {
 			for (JsonBuilder o : builders) {
 				add(o);
 			}
@@ -373,8 +359,7 @@ public class JsonBuilderFactory {
 		}
 
 		@Override
-		public <T> JsonArrayBuilder<P, R> addAll(Iterable<T> objects,
-				Mapper<T> transform) {
+		public <T> JsonArrayBuilder<P, R> addAll(Mapper<T> transform, Iterable<T> objects) {
 			for (T o : objects) {
 				add(transform.map(o));
 			}
