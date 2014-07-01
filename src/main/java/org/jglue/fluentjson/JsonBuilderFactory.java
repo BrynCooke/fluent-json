@@ -55,8 +55,8 @@ public class JsonBuilderFactory {
 	/**
 	 * @return Start building new json array.
 	 */
-	public static <T> JsonArrayBuilder<?, JsonArray> buildArray(
-			Iterable<T> objects, Mapper<T> transform) {
+	public static <T> JsonArrayBuilder<?, JsonArray> buildArray(Mapper<T> transform,
+			Iterable<T> objects) {
 		JsonArray a = new JsonArray();
 		Impl impl = new Impl(a, a);
 		for (T o : objects) {
@@ -116,7 +116,8 @@ public class JsonBuilderFactory {
 		}
 
 		@Override
-		public JsonObjectBuilder add(String key, Iterable<? extends JsonBuilder> builders) {
+		public JsonObjectBuilder add(String key,
+				Iterable<? extends JsonBuilder> builders) {
 			JsonArrayBuilder<?, JsonArray> array = createArray(builders);
 			add(key, array);
 
@@ -281,8 +282,8 @@ public class JsonBuilderFactory {
 		}
 
 		@Override
-		public <T> JsonObjectBuilder<P, R> add(String key, Iterable<T> objects,
-				Mapper<T> transform) {
+		public <T> JsonObjectBuilder<P, R> add(String key, Mapper<T> transform,
+				Iterable<T> objects) {
 			JsonArrayBuilder<?, JsonArray> array = createArray(objects,
 					transform);
 			add(key, array);
@@ -300,9 +301,11 @@ public class JsonBuilderFactory {
 		}
 
 		@Override
-		public <T> JsonObjectBuilder<P, R> add(String key, T object,
-				Mapper<T> transform) {
-			add(key, transform.map(object));
+		public <T> JsonObjectBuilder<P, R> add(String key, Mapper<T> transform,
+				T... objects) {
+			for (T object : objects) {
+				add(key, transform.map(object));
+			}
 			return this;
 		}
 

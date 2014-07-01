@@ -63,7 +63,7 @@ public interface JsonObjectBuilder<P, R> extends JsonBuilder {
      * @param objects The objects to add.
      * @return The current builder.
      */
-    public <T> JsonObjectBuilder<P, R> add(String key, Iterable<T> objects, Mapper<T> transform);
+    public <T> JsonObjectBuilder<P, R> add(String key, Mapper<T> transform, Iterable<T> objects);
     
     
 
@@ -83,7 +83,7 @@ public interface JsonObjectBuilder<P, R> extends JsonBuilder {
      * @param object The object to add.
      * @return The current builder.
      */
-    public <T> JsonObjectBuilder<P, R> add(String key, T object, Mapper<T> transform);
+    public <T> JsonObjectBuilder<P, R> add(String key, Mapper<T> transform, T... object);
 
     /**
      * Add a simple property
