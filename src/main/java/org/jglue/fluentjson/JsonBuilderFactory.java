@@ -53,6 +53,9 @@ public class JsonBuilderFactory {
 	}
 
 	/**
+	 * @param transform The transformer for the objects
+	 * @param objects The objects to build
+	 * @param <T> The type of the objects
 	 * @return Start building new json array.
 	 */
 	public static <T> JsonArrayBuilder<?, JsonArray> buildArray(Mapper<T> transform, Iterable<T> objects) {
@@ -64,7 +67,7 @@ public class JsonBuilderFactory {
 		return impl;
 	}
 
-	public static class Impl<P, R> implements JsonObjectBuilder<P, R>, JsonArrayBuilder<P, R> {
+	private static class Impl<P, R> implements JsonObjectBuilder<P, R>, JsonArrayBuilder<P, R> {
 
 		private JsonElement context;
 		private JsonElement root;

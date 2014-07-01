@@ -80,7 +80,6 @@ public interface JsonArrayBuilder<P, R> extends JsonBuilder {
 	/**
 	 * Add a single value to this array.
 	 * 
-	 * @param value the value to add.
 	 * @return the current builder.
 	 */
 	public JsonArrayBuilder<P, R> addNull();
@@ -113,7 +112,8 @@ public interface JsonArrayBuilder<P, R> extends JsonBuilder {
 	/**
 	 * Add an array of elements.
 	 * 
-	 * @param builders the builders to get the elements from.
+	 * @param transform The transformer for the object. 
+	 * @param objects the objects to add.
 	 * @param <T> The type of the objects
 	 * @return the current builder.
 	 */
@@ -122,7 +122,8 @@ public interface JsonArrayBuilder<P, R> extends JsonBuilder {
 	/**
 	 * Add a collection of elements to the current array.
 	 * 
-	 * @param builders the builders to get the elements from.
+	 * @param transform The transformer for the object.
+	 * @param objects the objects to add.
 	 * @param <T> The type of the objects
 	 * @return the current builder.
 	 */
@@ -131,6 +132,7 @@ public interface JsonArrayBuilder<P, R> extends JsonBuilder {
 	/**
 	 * Add a single element.
 	 * 
+	 * @param transform The transformer for the object.
 	 * @param objects the objects to add.
 	 * @param <T> The type of the objects
 	 * @return the current builder.

@@ -19,13 +19,13 @@ package org.jglue.fluentjson;
  * Transform an object in to a builder.
  * @author Bryn Cooke
  *
- * @param <T>
+ * @param <T> The type of the object to map.
  */
 public interface Mapper<T> {
 
 	/**
 	 * Transform the object in to a builder.
-	 * @param o the object to transform
+	 * @param o the object to transform.
 	 * @return The builder.
 	 */
 	public JsonBuilder map(T o);

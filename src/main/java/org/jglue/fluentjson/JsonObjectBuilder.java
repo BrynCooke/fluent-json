@@ -60,6 +60,7 @@ public interface JsonObjectBuilder<P, R> extends JsonBuilder {
      * Add an array of elements assigned to a key.
      * 
      * @param key The key for the new element.
+     * @param transform The transformer for the object.
      * @param objects The objects to add.
      * @param <T> The type of the objects
      * @return The current builder.
@@ -81,6 +82,7 @@ public interface JsonObjectBuilder<P, R> extends JsonBuilder {
      * Add a single element assigned to a key.
      * 
      * @param key The key for the new element.
+     * @param transform The transformer for the object.
      * @param objects The objects to add.
      * @param <T> The objects type.
      * @return The current builder.
@@ -119,7 +121,6 @@ public interface JsonObjectBuilder<P, R> extends JsonBuilder {
      * Add a null property. Note that other add methods also accept null. 
      * 
      * @param key The key for the property.
-     * @param value the value to assign
      * @return the current builder.
      */
     public JsonObjectBuilder<P, R> addNull(String key);
