@@ -61,6 +61,7 @@ public interface JsonObjectBuilder<P, R> extends JsonBuilder {
      * 
      * @param key The key for the new element.
      * @param objects The objects to add.
+     * @param <T> The type of the objects
      * @return The current builder.
      */
     public <T> JsonObjectBuilder<P, R> add(String key, Mapper<T> transform, Iterable<T> objects);
