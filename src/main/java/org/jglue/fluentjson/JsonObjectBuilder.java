@@ -15,6 +15,9 @@
  */
 package org.jglue.fluentjson;
 
+import java.time.temporal.Temporal;
+import java.util.Date;
+
 
 
 /**
@@ -133,6 +136,28 @@ public interface JsonObjectBuilder<P, R> extends JsonBuilder {
      * @return the current builder.
      */
     public JsonObjectBuilder<P, R> add(String key, String value);
+
+    
+    /**
+     * Add a simple property
+     * 
+     * @param key The key for the property.
+     * @param value the value to assign
+     * @return the current builder.
+     */
+    public JsonObjectBuilder<P, R> add(String key, Temporal value);
+
+    
+    /**
+     * Add a simple property
+     * 
+     * @param key The key for the property.
+     * @param value the value to assign
+     * @return the current builder.
+     */
+    public JsonObjectBuilder<P, R> add(String key, Date value);
+
+
 
 	/**
 	 * @return the underlying JSONSimple object.

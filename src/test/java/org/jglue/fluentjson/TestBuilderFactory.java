@@ -18,13 +18,12 @@ package org.jglue.fluentjson;
 import java.io.IOException;
 import java.io.StringWriter;
 import java.text.ParseException;
+import java.time.Instant;
+import java.time.LocalDate;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 
-import org.jglue.fluentjson.AbstractMapper;
-import org.jglue.fluentjson.JsonBuilder;
-import org.jglue.fluentjson.JsonBuilderFactory;
-import org.jglue.fluentjson.JsonObjectBuilder;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -51,10 +50,13 @@ public class TestBuilderFactory {
 
 	@Test
 	public void testSerialization() throws IOException, ParseException {
-
+		Date date = new Date(0);
+		
+		Instant instant = Instant.ofEpochMilli(0);
+		LocalDate localDate = LocalDate.of(0, 1, 1);
 		JsonObjectBuilder<?, JsonObject> builder = JsonBuilderFactory.buildObject().add("Prop1", "1").add("Prop2", 2)
 				.addNull("Prop3").add("Prop4", (String) null).addObject("Prop5").add("NP1", 4).end().addArray("Foo").addObject()
-				.end().add("AE1").end();
+				.end().add("AE1").end().add("Prop6", date).add("Prop7", instant).add("Prop8", localDate);
 
 		StringWriter writer = new StringWriter();
 		StringWriter writer2 = new StringWriter();
@@ -62,13 +64,13 @@ public class TestBuilderFactory {
 		builder.write(writer);
 		builder.write(jsonWriter);
 		Assert.assertEquals(
-				"{\"Prop1\":\"1\",\"Prop2\":2,\"Prop3\":null,\"Prop4\":null,\"Prop5\":{\"NP1\":4},\"Foo\":[{},\"AE1\"]}",
+				"{\"Prop1\":\"1\",\"Prop2\":2,\"Prop3\":null,\"Prop4\":null,\"Prop5\":{\"NP1\":4},\"Foo\":[{},\"AE1\"],\"Prop6\":\"1970-01-01T00:00Z\",\"Prop7\":\"1970-01-01T00:00:00Z\",\"Prop8\":\"0000-01-01\"}",
 				builder.toString());
 		Assert.assertEquals(
-				"{\"Prop1\":\"1\",\"Prop2\":2,\"Prop3\":null,\"Prop4\":null,\"Prop5\":{\"NP1\":4},\"Foo\":[{},\"AE1\"]}",
+				"{\"Prop1\":\"1\",\"Prop2\":2,\"Prop3\":null,\"Prop4\":null,\"Prop5\":{\"NP1\":4},\"Foo\":[{},\"AE1\"],\"Prop6\":\"1970-01-01T00:00Z\",\"Prop7\":\"1970-01-01T00:00:00Z\",\"Prop8\":\"0000-01-01\"}",
 				writer.toString());
 		Assert.assertEquals(
-				"{\"Prop1\":\"1\",\"Prop2\":2,\"Prop3\":null,\"Prop4\":null,\"Prop5\":{\"NP1\":4},\"Foo\":[{},\"AE1\"]}",
+				"{\"Prop1\":\"1\",\"Prop2\":2,\"Prop3\":null,\"Prop4\":null,\"Prop5\":{\"NP1\":4},\"Foo\":[{},\"AE1\"],\"Prop6\":\"1970-01-01T00:00Z\",\"Prop7\":\"1970-01-01T00:00:00Z\",\"Prop8\":\"0000-01-01\"}",
 				writer2.toString());
 
 	}

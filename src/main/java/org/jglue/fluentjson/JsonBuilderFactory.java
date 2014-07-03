@@ -17,15 +17,19 @@ package org.jglue.fluentjson;
 
 import java.io.IOException;
 import java.io.Writer;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.time.ZoneId;
+import java.time.temporal.Temporal;
+import java.util.Date;
 import java.util.Map;
+import java.util.TimeZone;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonNull;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonPrimitive;
-import com.google.gson.TypeAdapter;
-import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
 
 /**
@@ -53,9 +57,12 @@ public class JsonBuilderFactory {
 	}
 
 	/**
-	 * @param transform The transformer for the objects
-	 * @param objects The objects to build
-	 * @param <T> The type of the objects
+	 * @param transform
+	 *            The transformer for the objects
+	 * @param objects
+	 *            The objects to build
+	 * @param <T>
+	 *            The type of the objects
 	 * @return Start building new json array.
 	 */
 	public static <T> JsonArrayBuilder<?, JsonArray> buildArray(Mapper<T> transform, Iterable<T> objects) {
@@ -365,6 +372,56 @@ public class JsonBuilderFactory {
 		public <T> JsonArrayBuilder<P, R> addAll(Mapper<T> transform, Iterable<T> objects) {
 			for (T o : objects) {
 				add(transform.map(o));
+			}
+			return this;
+		}
+
+		@Override
+		public JsonObjectBuilder<P, R> add(String key, Temporal value) {
+			JsonObject obj = (JsonObject) context;
+			if (value == null) {
+				obj.add(key, JsonNull.INSTANCE);
+			} else {
+				obj.add(key, new JsonPrimitive(value.toString()));
+			}
+			return this;
+		}
+
+		@Override
+		public JsonObjectBuilder<P, R> add(String key, Date value) {
+			JsonObject obj = (JsonObject) context;
+			if (value == null) {
+				obj.add(key, JsonNull.INSTANCE);
+			} else {
+				DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm'Z'");
+				dateFormat.setTimeZone(TimeZone.getTimeZone("UTC"));
+				String isoDate = dateFormat.format(value);
+				obj.add(key, new JsonPrimitive(isoDate));
+			}
+			return this;
+		}
+
+		@Override
+		public JsonArrayBuilder<P, R> add(Date value) {
+			JsonArray array = ((JsonArray) context);
+			if (value == null) {
+				array.add(JsonNull.INSTANCE);
+			} else {
+				DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm'Z'");
+				dateFormat.setTimeZone(TimeZone.getTimeZone("UTC"));
+				String isoDate = dateFormat.format(value);
+				array.add(new JsonPrimitive(isoDate));
+			}
+			return this;
+		}
+
+		@Override
+		public JsonArrayBuilder<P, R> add(Temporal value) {
+			JsonArray array = ((JsonArray) context);
+			if (value == null) {
+				array.add(JsonNull.INSTANCE);
+			} else {
+				array.add(new JsonPrimitive(value.toString()));
 			}
 			return this;
 		}

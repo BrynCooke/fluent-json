@@ -15,6 +15,9 @@
  */
 package org.jglue.fluentjson;
 
+import java.time.temporal.Temporal;
+import java.util.Date;
+
 
 
 /**
@@ -83,6 +86,22 @@ public interface JsonArrayBuilder<P, R> extends JsonBuilder {
 	 * @return the current builder.
 	 */
 	public JsonArrayBuilder<P, R> addNull();
+	
+	/**
+	 * Add a single value to this array.
+	 * 
+	 * @param value the value to add.
+	 * @return the current builder.
+	 */
+	public JsonArrayBuilder<P, R> add(Date value);
+	
+	/**
+	 * Add a single value to this array.
+	 * 
+	 * @param value the value to add.
+	 * @return the current builder.
+	 */
+	public JsonArrayBuilder<P, R> add(Temporal value);
 	
 	/**
 	 * Add an array of elements.
