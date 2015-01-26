@@ -431,20 +431,40 @@ public class JsonBuilderFactory {
 		}
 	}
 
+	/**
+	 * Build a primitive for use in arrays
+	 * @param o The value
+	 * @return the new builder
+	 */
 	public static JsonBuilder buildPrimitive(Number o) {
 		return new JsonPrimitiveBuilder(o);
 	}
 
+	/**
+	 * Build a primitive for use in arrays
+	 * @param o The value
+	 * @return the new builder
+	 */
 	public static JsonBuilder buildPrimitive(Character o) {
 
 		return new JsonPrimitiveBuilder(o);
 	}
 
+	/**
+	 * Build a primitive for use in arrays
+	 * @param o The value
+	 * @return the new builder
+	 */
 	public static JsonBuilder buildPrimitive(Boolean o) {
 
 		return new JsonPrimitiveBuilder(o);
 	}
 
+	/**
+	 * Build a primitive for use in arrays
+	 * @param o The value
+	 * @return the new builder
+	 */
 	public static JsonBuilder buildPrimitive(String o) {
 
 		return new JsonPrimitiveBuilder(o);
