@@ -177,7 +177,11 @@ public class JsonBuilderFactory {
 		@Override
 		public JsonArrayBuilder add(JsonBuilder builder) {
 			JsonArray array = (JsonArray) context;
-			array.add(((Impl) builder).context);
+			if (builder instanceof JsonPrimitiveBuilder) {
+				array.add(((JsonPrimitiveBuilder) builder).getPrimitive());
+			} else {
+				array.add(((Impl) builder).context);
+			}
 			return this;
 		}
 
@@ -425,6 +429,25 @@ public class JsonBuilderFactory {
 			}
 			return this;
 		}
+	}
+
+	public static JsonBuilder buildPrimitive(Number o) {
+		return new JsonPrimitiveBuilder(o);
+	}
+
+	public static JsonBuilder buildPrimitive(Character o) {
+
+		return new JsonPrimitiveBuilder(o);
+	}
+
+	public static JsonBuilder buildPrimitive(Boolean o) {
+
+		return new JsonPrimitiveBuilder(o);
+	}
+
+	public static JsonBuilder buildPrimitive(String o) {
+
+		return new JsonPrimitiveBuilder(o);
 	}
 
 }

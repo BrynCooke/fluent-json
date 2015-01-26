@@ -17,6 +17,7 @@ package org.jglue.fluentjson;
 
 import java.time.temporal.Temporal;
 import java.util.Date;
+import java.util.List;
 
 
 
@@ -163,4 +164,10 @@ public interface JsonArrayBuilder<P, R> extends JsonBuilder {
 	 * @return the underlying JSONSimple object.
 	 */
 	public R getJson();
+
+
+
+
+
+	
 }

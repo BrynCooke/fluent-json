@@ -17,17 +17,53 @@ package org.jglue.fluentjson;
 
 /**
  * Transform an object in to a builder.
+ * 
  * @author Bryn Cooke
  *
- * @param <T> The type of the object to map.
+ * @param <T>
+ *            The type of the object to map.
  */
 public interface Mapper<T> {
 
 	/**
 	 * Transform the object in to a builder.
-	 * @param o the object to transform.
+	 * 
+	 * @param o
+	 *            the object to transform.
 	 * @return The builder.
 	 */
 	public JsonBuilder map(T o);
+
 	
+	public static Mapper<String> STRING = new Mapper<String>() {
+
+		@Override
+		public JsonBuilder map(String o) {
+			return JsonBuilderFactory.buildPrimitive(o);
+		}
+	};
+	
+	public static Mapper<Number> NUMBER = new Mapper<Number>() {
+
+		@Override
+		public JsonBuilder map(Number o) {
+			return JsonBuilderFactory.buildPrimitive(o);
+		}
+	};
+	
+	public static Mapper<Boolean> BOOLEAN = new Mapper<Boolean>() {
+
+		@Override
+		public JsonBuilder map(Boolean o) {
+			return JsonBuilderFactory.buildPrimitive(o);
+		}
+	};
+	
+	public static Mapper<Character> CHARACTER = new Mapper<Character>() {
+
+		@Override
+		public JsonBuilder map(Character o) {
+			return JsonBuilderFactory.buildPrimitive(o);
+		}
+	};
 }

@@ -211,4 +211,15 @@ public class TestBuilderFactory {
 		JsonElement test = new JsonParser().parse("[{\"b\":\"hello\",\"c\":\"world\"}, {\"b\":\"hello\",\"c\":\"world\"}]");
 		Assert.assertEquals(test, jsonArray);
 	}
+	
+	@Test
+	public void testAddArrayOfPrimitives() {
+		List<String> likes = Arrays.asList("chicken", "pasta");
+        JsonObject json = JsonBuilderFactory.buildObject()
+                  .add( "name", "Joe" )
+                  .add( "tastes", JsonBuilderFactory.buildArray().addAll(Mapper.STRING, likes))
+                  .getJson();
+        Assert.assertEquals("{\"name\":\"Joe\",\"tastes\":[\"chicken\",\"pasta\"]}", json.toString());
+        
+	}
 }
