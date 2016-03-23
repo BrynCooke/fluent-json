@@ -15,6 +15,8 @@
  */
 package org.jglue.fluentjson;
 
+import com.google.gson.JsonElement;
+
 import java.time.temporal.Temporal;
 import java.util.Date;
 
@@ -80,7 +82,16 @@ public interface JsonObjectBuilder<P, R> extends JsonBuilder {
      * @return The current builder.
      */
     public JsonObjectBuilder<P, R> add(String key, JsonBuilder builder);
-    
+
+    /**
+     * Add a single JSON element assigned to a key.
+     *
+     * @param key The key for the new element.
+     * @param builder The builder for the element.
+     * @return The current builder.
+     */
+    JsonObjectBuilder add(String key, JsonElement value);
+
     /**
      * Add a single element assigned to a key.
      * 

@@ -15,9 +15,10 @@
  */
 package org.jglue.fluentjson;
 
+import com.google.gson.JsonElement;
+
 import java.time.temporal.Temporal;
 import java.util.Date;
-import java.util.List;
 
 
 
@@ -103,7 +104,15 @@ public interface JsonArrayBuilder<P, R> extends JsonBuilder {
 	 * @return the current builder.
 	 */
 	public JsonArrayBuilder<P, R> add(Temporal value);
-	
+
+	/**
+	 * Add a single JSON element to this array.
+	 *
+	 * @param value the value to add.
+	 * @return the current builder.
+	 */
+	public JsonArrayBuilder<P, R> add(JsonElement value);
+
 	/**
 	 * Add an array of elements.
 	 * 
