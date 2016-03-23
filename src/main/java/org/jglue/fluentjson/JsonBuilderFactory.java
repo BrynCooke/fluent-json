@@ -15,22 +15,17 @@
  */
 package org.jglue.fluentjson;
 
+import com.google.gson.*;
+import com.google.gson.internal.Streams;
+import com.google.gson.stream.JsonWriter;
+
 import java.io.IOException;
 import java.io.Writer;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.time.ZoneId;
 import java.time.temporal.Temporal;
 import java.util.Date;
-import java.util.Map;
 import java.util.TimeZone;
-
-import com.google.gson.JsonArray;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonNull;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonPrimitive;
-import com.google.gson.stream.JsonWriter;
 
 /**
  * Factory for builders.
@@ -193,6 +188,13 @@ public class JsonBuilderFactory {
 		}
 
 		@Override
+		public JsonObjectBuilder add(String key, JsonElement value) {
+			JsonObject obj = (JsonObject) context;
+			obj.add(key, value);
+			return this;
+		}
+
+		@Override
 		public String toString() {
 			return root.toString();
 		}
@@ -287,7 +289,11 @@ public class JsonBuilderFactory {
 
 		@Override
 		public void write(JsonWriter out) throws IOException {
-			write(out, root);
+			if (root == null) {
+				out.nullValue();
+			} else {
+				Streams.write(root, out);
+			}
 		}
 
 		@Override
@@ -326,42 +332,6 @@ public class JsonBuilderFactory {
 				add(transform.map(object));
 			}
 			return this;
-		}
-
-		/**
-		 * Serialization code copied from GSON
-		 */
-		private void write(JsonWriter out, JsonElement value) throws IOException {
-			if (value == null || value.isJsonNull()) {
-				out.nullValue();
-			} else if (value.isJsonPrimitive()) {
-				JsonPrimitive primitive = value.getAsJsonPrimitive();
-				if (primitive.isNumber()) {
-					out.value(primitive.getAsNumber());
-				} else if (primitive.isBoolean()) {
-					out.value(primitive.getAsBoolean());
-				} else {
-					out.value(primitive.getAsString());
-				}
-
-			} else if (value.isJsonArray()) {
-				out.beginArray();
-				for (JsonElement e : value.getAsJsonArray()) {
-					write(out, e);
-				}
-				out.endArray();
-
-			} else if (value.isJsonObject()) {
-				out.beginObject();
-				for (Map.Entry<String, JsonElement> e : value.getAsJsonObject().entrySet()) {
-					out.name(e.getKey());
-					write(out, e.getValue());
-				}
-				out.endObject();
-
-			} else {
-				throw new IllegalArgumentException("Couldn't write " + value.getClass());
-			}
 		}
 
 		@Override
@@ -427,6 +397,13 @@ public class JsonBuilderFactory {
 			} else {
 				array.add(new JsonPrimitive(value.toString()));
 			}
+			return this;
+		}
+
+		@Override
+		public JsonArrayBuilder<P, R> add(JsonElement value) {
+			JsonArray array = ((JsonArray) context);
+			array.add(value);
 			return this;
 		}
 	}
